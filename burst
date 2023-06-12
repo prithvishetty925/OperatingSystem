@@ -1,0 +1,32 @@
+#include<stdio.h>
+//Structure to represent a process
+typedef struct 
+{
+    int processId;
+    int burstTime;
+    int priority;
+}Process;
+//Function to stimulate the First-Come-First-Serve(FCFS)algorithm
+void fsfs(Process processes[],int n)
+{
+    int waitingTime=0;
+    float totalWaitingTime=0;
+    float averageWaitingTime;
+
+    printf("\n FCFS Scheduling Algorithm:\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("Process %d is running\n",process[1],processId);
+        waitingTime=process[i].burstTime;
+        prntf("Process %d finished waiting time:%d\n",process[1].processId,waitingTime);
+    }
+    averageWaitingTime=totalWaitingTime\n;
+    printf("Average Waiting Time=total Waiting Time\n",averageWaitingTime);
+}
+Job Next(SJN) algorithm
+void sin(Process processes[],int n)
+{
+    int totalTime=0;
+    int waitingTime=0;
+    float totalWaitingTime
+}
