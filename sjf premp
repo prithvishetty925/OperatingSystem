@@ -64,4 +64,22 @@ p2                4                 3                   7
 p1                5                 7                   12
 
  the average Waiting Time=2.750000
+  the average Turnaround Time=5.750000
+
+output 2:
+please enter number of process: 4
+
+ enter the Burst Time:
+p1:1
+p2:5
+p3:1
+p4:6
+
+Process     Burst Time          Waiting Time    Turnaround Time
+p1                1                 0                   1
+p3                1                 1                   2
+p2                5                 2                   7
+p4                6                 7                   13
+
+ the average Waiting Time=2.500000
   the average Turnaround Time=5.750000*/
