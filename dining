@@ -1,0 +1,57 @@
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;pthread.h&gt;
+#include&lt;semaphore.h&gt;
+#include&lt;unistd.h&gt;
+
+sem_t room; // counting semaphore
+sem_t chopstick[5]; // binary semaphore
+
+void * philosopher(void *);
+void eat(int);
+
+void eat(int phil)
+{
+printf(&quot;\nPhilosopher %d is eating&quot;,phil);
+}
+
+int main()
+{
+int i,a[5];
+pthread_t tid[5]; // creation of threads refering to 5 philosophers
+
+sem_init(&amp;room,0,4); // initializations of semaphore varring from 0 to 4.
+
+for(i=0;i&lt;5;i++)
+
+sem_init(&amp;chopstick[i],0,1); //initializations of binary semaphore .
+
+for(i=0;i&lt;5;i++){
+a[i]=i;
+pthread_create(&amp;tid[i],NULL,philosopher,(void *)&amp;a[i]); // creation of philosopher and
+
+assigning it a number.
+}
+for(i=0;i&lt;5;i++)
+pthread_join(tid[i],NULL); // waits until a thread gets terminated
+
+}
+
+void * philosopher(void * num)
+{
+int phil=*(int *)num;
+
+sem_wait(&amp;room); // semaphore function to checks if resources are available.
+printf(&quot;\nPhilosopher %d has entered room&quot;,phil);
+sem_wait(&amp;chopstick[phil]); // semaphore function to checks if chopstick is available.
+sem_wait(&amp;chopstick[(phil+1)%5]);
+
+eat(phil);
+sleep(2);
+printf(&quot;\nPhilosopher %d has finished eating&quot;,phil);
+
+sem_post(&amp;chopstick[(phil+1)%5]); // gives confirmation if semophore is released successfully
+sem_post(&amp;chopstick[phil]);
+
+sem_post(&amp;room);
+}
