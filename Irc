@@ -50,7 +50,7 @@ void main(){
     printf("Page Fault:%d",pagefault);
 }
 
-/*OUTPUT:
+/*output:
 Page    Frame1  Frame2  Frame3
 1:      1
 2:      1       2
