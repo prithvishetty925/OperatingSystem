@@ -1,68 +1,102 @@
-#include &lt;stdio.h&gt;
-int main()
-{
-// P0, P1, P2, P3, P4 are the Process names here
-int n, m, i, j, k;
-n = 5; // Number of processes
-m = 3; // Number of resources
-int alloc[5][3] = { { 0, 1, 0 }, // P0 // Allocation Matrix
-{ 2, 0, 0 }, // P1
-{ 3, 0, 2 }, // P2
-{ 2, 1, 1 }, // P3
-{ 0, 0, 2 } }; // P4
+#include<stdio.h>
+// #include<conio.h>
+void main(){
+    int k=0,output[10],d=0,t=0,ins[5],i,avail[5],allocated[10][5],need[10][5],max[10][5],pno,j,rz,P[10],count=0;
+    printf("\n Enter the number of resources : ");
+    scanf("%d",&rz);
+    printf("\n enter the max instances of each resources\n");
+    for(i=0;i<rz;i++)
+    {
+        avail[i]=0;
+        printf("%c= ",(i+97));
+        scanf("%d",&ins[i]);
+    }
+    printf("\n Enter the number of processes : ");
+    scanf("%d",&pno);
+    printf("\n Enter the allocation matrix \n     ");
+    for(i=0;i<rz;i++)
+        printf(" %c",(i+97));
+    printf("\n");
+    for(i=0;i <pno;i++)
+    {
+        P[i]=i;
+        printf("P[%d]  ",P[i]);
+        for(j=0;j<rz;j++)
+        {
+            scanf("%d",&allocated[i][j]);
+            avail[j]+=allocated[i][j];
+        }
+    }
+    printf("\nEnter the max matrix \n     ");
+    for(i=0;i<rz;i++)
+    {
+        printf(" %c",(i+97));
+        avail[i]=ins[i]-avail[i];
+    }
+    printf("\n");
+    for(i=0;i <pno;i++)
+    {
+        printf("P[%d]  ",i);
+        for(j=0;j<rz;j++)
+            scanf("%d",&max[i][j]);
+    }
+    printf("\n");
+    A: d=-1;
+    for(i=0;i <pno;i++)
+    {
+        count=0;
+        t=P[i];
+        for(j=0;j<rz;j++)
+        {
+            need[t][j] = max[t][j]-allocated[t][j];
+            if(need[t][j]<=avail[j])
+                count++;
+        }
+        if(count==rz)
+        {
+            output[k++]=P[i];
+            for(j=0;j<rz;j++)
+                avail[j]+=allocated[t][j];
+        }
+        else
+            P[++d]=P[i];
+    }
+    if(d!=-1)
+    {
+        pno=d+1;
+        goto A;
+    }
+    printf("\t <");
+    for(i=0;i<k;i++)
+        printf(" P[%d] ",output[i]);
+    printf(">");
+    // getch();
+}
+/*
+output:
+ Enter the number of resources : 3
 
-int max[5][3] = { { 7, 5, 3 }, // P0 // MAX Matrix
-{ 3, 2, 2 }, // P1
-{ 9, 0, 2 }, // P2
-{ 2, 2, 2 }, // P3
-{ 4, 3, 3 } }; // P4
-int avail[3] = { 3, 3, 2 }; // Available Resources
-int f[n], ans[n], ind = 0;
-for (k = 0; k &lt; n; k++) {
-f[k] = 0;
-}
-int need[n][m];
-for (i = 0; i &lt; n; i++) {
-for (j = 0; j &lt; m; j++)
-need[i][j] = max[i][j] - alloc[i][j];
-}
-int y = 0;
-for (k = 0; k &lt; 5; k++) {
-for (i = 0; i &lt; n; i++) {
-if (f[i] == 0) {
-int flag = 0;
-for (j = 0; j &lt; m; j++) {
-if (need[i][j] &gt; avail[j]){
-flag = 1;
-break;
-}
-}
-if (flag == 0) {
-ans[ind++] = i;
-for (y = 0; y &lt; m; y++)
-avail[y] += alloc[i][y];
-f[i] = 1;
-}
-}
-}
-}
-int flag = 1;
-for(int i=0;i&lt;n;i++)
-{
+ enter the max instances of each resources
+a= 10
+b= 5
+c= 7
 
-if(f[i]==0)
-{
-flag=0;
-printf(&quot;The following system is not safe&quot;);
-break;
-}
-}
-if(flag==1)
-{
-printf(&quot;Following is the SAFE Sequence\n&quot;);
-for (i = 0; i &lt; n - 1; i++)
-printf(&quot; P%d -&gt;&quot;, ans[i]);
-printf(&quot; P%d&quot;, ans[n - 1]);
-}
-return (0);
-}
+ Enter the number of processes : 5
+
+ Enter the allocation matrix 
+      a b c
+P[0]  0 1 0
+P[1]  2 0 0
+P[2]  3 0 2
+P[3]  2 1 1
+P[4]  0 0 2
+
+Enter the max matrix 
+      a b c
+P[0]  7 5 3 
+P[1]  3 2 2
+P[2]  9 0 2
+P[3]  2 2 2
+P[4]  4 3 3
+
+         < P[1]  P[3]  P[4]  P[0]  P[2] >*/
